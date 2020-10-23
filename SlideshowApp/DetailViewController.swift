@@ -12,8 +12,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var detailImageView: UIImageView!
     //拡大する画像番号を取得
-    var imageNumber:Int = 0
-    
+    var imageNumber:Int = 0    
     var imageArray:[UIImage] = [// スライドショーさせる画像の配列を宣言
         UIImage(named: "bird1")!,
         UIImage(named: "bird2")!,
@@ -26,6 +25,11 @@ class DetailViewController: UIViewController {
         
         detailImageView.image = imageArray[imageNumber]
         detailImageView.contentMode = UIView.ContentMode.scaleAspectFill
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let ViewController:ViewController = segue.destination as! ViewController
+        ViewController.nowIndex = imageNumber
     }
     
 

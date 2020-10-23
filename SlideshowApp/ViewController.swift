@@ -11,6 +11,12 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBAction func unwind(_ segue: UIStoryboardSegue) {//戻るボタンのためのsegue
+      if timerSwitch == true {
+          self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(changeImage), userInfo: nil, repeats: true)
+          toggleButton.setTitle("停止", for: .normal)// ボタンの名前を停止に変える
+          prevButton.isEnabled = false
+          nextButton.isEnabled = false
+      }
     }
     @IBAction func GoDetail(_ sender: Any) {//imageViewを覆うやつ
     }
@@ -26,6 +32,7 @@ class ViewController: UIViewController {
         UIImage(named: "bird3")!
     ]
     
+    var timerSwitch:Bool = false
     
     //timer
     var timer: Timer!
@@ -70,7 +77,6 @@ class ViewController: UIViewController {
             toggleButton.setTitle("停止", for: .normal)// ボタンの名前を停止に変える
             prevButton.isEnabled = false
             nextButton.isEnabled = false
-            
         }else{
             self.timer.invalidate()
             self.timer = nil
@@ -93,8 +99,19 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let DetailViewController:DetailViewController = segue.destination as! DetailViewController
         DetailViewController.imageNumber = nowIndex
+        if self.timer == nil {
+            timerSwitch = false
+        }else{
+            self.timer.invalidate()
+            self.timer = nil
+            toggleButton.setTitle("再生", for: .normal)
+            prevButton.isEnabled = true
+            nextButton.isEnabled = true
+            timerSwitch = true
+        }
     }
     
+  
     
 
     
